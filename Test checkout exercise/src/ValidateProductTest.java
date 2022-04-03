@@ -1,26 +1,13 @@
 //SCRIPT TO TEST CHECKOUT
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.Select;
-
-import java.awt.AWTException;
-import java.awt.Robot;
-import java.awt.event.KeyEvent;
-import java.text.NumberFormat;
-import java.text.ParseException;
 import java.util.List;
 
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
- import org.testng.Assert;
-
+import org.testng.Assert;
+ 
 
 
 public class ValidateProductTest {
@@ -33,10 +20,15 @@ public class ValidateProductTest {
         WebDriver driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.get("https://bstackdemo.com/");
+		// Implicit wait
 
 
-        Thread.sleep(1000);
+        Thread.sleep(1000);  //Explicit Wait
 		
+		// Sign in should be visible
+		// Title should be displayed
+		// Login steps
+		// Product verification
 		
 		List<WebElement> productlist = driver.findElements(By.xpath("//*[@class='shelf-container']/div/p"));
 		List<WebElement> pricelist = driver.findElements(By.xpath("//*[@class='shelf-container']/div/div[3]/div[1]/b"));
@@ -64,7 +56,12 @@ public class ValidateProductTest {
 			}
 		}
 		
+		// Check if Float cart is displayed
+		// 
+
 		driver.findElement(By.xpath("//*[contains(text(),'Checkout')]")).click();
+
+
 		
 		Thread.sleep(1000);
 		
@@ -77,14 +74,13 @@ public class ValidateProductTest {
         //Enter UserName and Password
         user.sendKeys("image_not_loading_user");
         user.sendKeys(Keys.ENTER);
-        Thread.sleep(1000);
         pass.sendKeys("testingisfun99");
         pass.sendKeys(Keys.ENTER);
-        Thread.sleep(2000);
 		
 		driver.findElement(By.xpath("//button[@id='login-btn']")).click();
 		Thread.sleep(5000);	
 		
+		// Checkout Page
 		String ProductAddedInCart = driver.findElement(By.xpath("//*[@class='product-title optimizedCheckout-contentPrimary']")).getText();
 		System.out.println(ProductAddedInCart);
 		Thread.sleep(2000);	
@@ -102,37 +98,45 @@ public class ValidateProductTest {
 		
 		Assert.assertEquals(getpricelist, CartPrice);
 		System.out.println("Product Price match");
-		
-
-		
+			
 		Thread.sleep(1000);
-		// driver.close();
+
 
 		// Code for entering the text
-		driver.findElement(By.xpath("//input[@id='firstNameInput']")).sendKeys("Test");
-		Thread.sleep(300);
+		enterUserDetails(driver);
 
-		driver.findElement(By.xpath("//input[@id='lastNameInput']")).sendKeys("Test");
-		Thread.sleep(300);
-
-		driver.findElement(By.xpath("//input[@id='addressLine1Input']")).sendKeys("Test");
-		Thread.sleep(300);
-
-		driver.findElement(By.xpath("//input[@id='provinceInput']")).sendKeys("Test");
-		Thread.sleep(300);
-
-		driver.findElement(By.xpath("//input[@id='postCodeInput']")).sendKeys("2166");
+		
+	
+		
 		Thread.sleep(2000);
-
-		driver.findElement(By.xpath("//button[@id='checkout-shipping-continue']")).click();
-		Thread.sleep(2000);
-
+		// Check for Confirmation page is visible
+		// Verify text "Your Order has been successfully placed.""
+		//Verify Donl;oad receipt
+		// Verify Order Summary
 		driver.findElement(By.xpath("//button[contains(text(),'Continue Shopping »')]")).click();
+
 		Thread.sleep(2000);
+		// Verify user is in product page
+		// Verify Orders link is visible
 
 		driver.findElement(By.xpath("//strong[contains(text(),'Orders')]")).click();
+
+		// Verify page title
+		// Verify Order details
 		Thread.sleep(2000);
 
     }
 	
+
+	private static void enterUserDetails(WebDriver driver){
+
+
+		driver.findElement(By.xpath("//input[@id='firstNameInput']")).sendKeys("Test");
+		driver.findElement(By.xpath("//input[@id='lastNameInput']")).sendKeys("Test");
+		driver.findElement(By.xpath("//input[@id='addressLine1Input']")).sendKeys("Test");
+		driver.findElement(By.xpath("//input[@id='provinceInput']")).sendKeys("Test");
+		driver.findElement(By.xpath("//input[@id='postCodeInput']")).sendKeys("2166");
+		driver.findElement(By.xpath("//button[@id='checkout-shipping-continue']")).click();
+	}
+
 }
